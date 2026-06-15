@@ -109,7 +109,10 @@ internal class SherpaOnnxKwsHelper(
       numThreads = numThreads ?: 1,
       debug = debug ?: false,
       provider = provider ?: "cpu",
-      modelType = "zipformer"
+      // KWS zipformer models are zipformer2 (chunk-based streaming encoder).
+      // "zipformer" selects the v1 parser, which aborts when the encoder lacks
+      // the v1-only 'attention_dims' metadata key.
+      modelType = "zipformer2"
     )
 
     var resolvedKeywordsFile = keywordsFile?.trim().orEmpty()

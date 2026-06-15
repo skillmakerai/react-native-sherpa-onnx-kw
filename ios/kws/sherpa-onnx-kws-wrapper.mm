@@ -107,7 +107,10 @@ KwsInitResult KwsWrapper::initialize(
     config.model_config.num_threads = numThreads <= 0 ? 1 : numThreads;
     config.model_config.provider = provider.empty() ? "cpu" : provider;
     config.model_config.debug = debug;
-    config.model_config.model_type = "zipformer";
+    // KWS zipformer models are zipformer2 (chunk-based streaming encoder).
+    // "zipformer" selects the v1 parser, which aborts when the encoder lacks
+    // the v1-only 'attention_dims' metadata key.
+    config.model_config.model_type = "zipformer2";
     config.keywords_file = keywordsFile.empty() ? (paths.count("keywords") ? paths["keywords"] : "") : keywordsFile;
     config.keywords_score = keywordsScore;
     config.keywords_threshold = keywordsThreshold;
