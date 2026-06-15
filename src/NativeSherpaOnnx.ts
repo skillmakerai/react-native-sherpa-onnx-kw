@@ -234,6 +234,80 @@ export interface Spec extends TurboModule {
     isEndpoint: boolean;
   }>;
 
+  // ==================== Keyword Spotting (KWS) Methods ====================
+
+  /**
+   * Initialize KeywordSpotter for wake-word/keyword detection (single options object).
+   * @param instanceId - Unique ID for this engine instance (from createKeywordSpotter)
+   * @param options - All init options (modelDir, modelType, keywordsFile, and optional tuning params).
+   * @returns `{ success: true }` on success, or `{ success: false, error?: string }` on structured native failure.
+   */
+  initializeKwsWithOptions(
+    instanceId: string,
+    options: {
+      modelDir: string;
+      modelType: string;
+      keywordsFile?: string;
+      keywordsScore?: number;
+      keywordsThreshold?: number;
+      numTrailingBlanks?: number;
+      maxActivePaths?: number;
+      numThreads?: number;
+      provider?: string;
+      debug?: boolean;
+    }
+  ): Promise<{ success: boolean; error?: string }>;
+
+  /** Create a new stream for the given KeywordSpotter instance. */
+  createKwsStream(
+    instanceId: string,
+    streamId: string,
+    keywords?: string
+  ): Promise<void>;
+
+  /** Feed PCM samples to a keyword spotting stream. */
+  acceptKwsWaveform(
+    streamId: string,
+    samples: number[],
+    sampleRate: number
+  ): Promise<void>;
+
+  /** Run decoding on the stream (call when isKwsStreamReady is true). */
+  decodeKwsStream(streamId: string): Promise<void>;
+
+  /** True if the stream has enough audio to decode. */
+  isKwsStreamReady(streamId: string): Promise<boolean>;
+
+  /** Get current result (call after decodeKwsStream). */
+  getKwsStreamResult(streamId: string): Promise<{
+    keyword: string;
+    tokens: string[];
+    timestamps: number[];
+  }>;
+
+  /** Reset stream state for reuse. */
+  resetKwsStream(streamId: string): Promise<void>;
+
+  /** Release stream and remove from native state. */
+  releaseKwsStream(streamId: string): Promise<void>;
+
+  /** Release KeywordSpotter and all its streams. */
+  unloadKws(instanceId: string): Promise<void>;
+
+  /**
+   * Convenience: feed audio, decode while ready, return result in one call.
+   * Automatically resets stream if keyword is detected.
+   */
+  processKwsAudioChunk(
+    streamId: string,
+    samples: number[],
+    sampleRate: number
+  ): Promise<{
+    keyword: string;
+    tokens: string[];
+    timestamps: number[];
+  }>;
+
   /**
    * Start native PCM live capture. Microphone audio is captured and resampled to the requested
    * sampleRate; chunks are emitted via the "pcmLiveStreamData" event (base64 Int16 PCM).

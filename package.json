@@ -15,6 +15,11 @@
       "types": "./lib/typescript/src/stt/index.d.ts",
       "default": "./lib/module/stt/index.js"
     },
+    "./kws": {
+      "source": "./src/kws/index.ts",
+      "types": "./lib/typescript/src/kws/index.d.ts",
+      "default": "./lib/module/kws/index.js"
+    },
     "./tts": {
       "source": "./src/tts/index.ts",
       "types": "./lib/typescript/src/tts/index.d.ts",
