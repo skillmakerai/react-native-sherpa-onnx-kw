@@ -160,7 +160,10 @@ internal class SherpaOnnxKwsHelper(
         provider = provider,
         debug = debug
       )
-      val spotter = KeywordSpotter(context.assets, config)
+      // assetManager MUST be null: we pass absolute filesystem paths (resolved
+      // by resolveModelPath). A non-null AssetManager makes sherpa-onnx treat
+      // the paths as asset-relative and abort (k2-fsa/sherpa-onnx#2562).
+      val spotter = KeywordSpotter(assetManager = null, config = config)
       val inst = KwsInstance(spotter, config)
       instances[instanceId] = inst
       val map = Arguments.createMap()
