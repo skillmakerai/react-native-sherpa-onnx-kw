@@ -362,6 +362,9 @@ internal class SherpaOnnxKwsHelper(
     streamToInstance.clear()
   }
 
+  private fun readableArrayToFloatArray(arr: ReadableArray): FloatArray =
+    FloatArray(arr.size()) { i -> arr.getDouble(i).toFloat() }
+
   private fun resultToKwsWritableMap(result: KeywordSpotterResult): WritableMap {
     val map = Arguments.createMap()
     map.putString("keyword", result.keyword)
