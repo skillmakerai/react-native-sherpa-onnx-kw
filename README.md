@@ -118,6 +118,7 @@ Full step-by-step: [Download manager – Setup (iOS & Android)](docs/download-ma
 |---------|--------|------|-------|
 | Offline Speech-to-Text | ✅ **Supported** | [STT](./docs/stt.md) | No internet required; multiple model types (Zipformer, Paraformer, Whisper, Qwen3 ASR, Cohere Transcribe, etc.). See [Supported Model Types](#supported-model-types). |
 | Online (streaming) Speech-to-Text | ✅ **Supported** | [Streaming STT](./docs/stt-streaming.md) | Real-time recognition from microphone or stream; partial results, endpoint detection. Use streaming-capable models (e.g. transducer, paraformer). |
+| Keyword Spotting (KWS) | ✅ **Supported** | [KWS](./docs/kws.md) | On-device wake-word / keyword detection via `createKeywordSpotter()`; matches keywords from `keywords.txt` (no transcription). Use KWS zipformer transducer models. |
 | Live capture API | ✅ **Supported** | [PCM live stream](./docs/pcm-live-stream.md) | Native microphone capture with resampling for live transcription (use with streaming STT). |
 | Text-to-Speech | ✅ **Supported** | [TTS](./docs/tts.md) | Multiple model types (VITS, Matcha, Kokoro, etc.). See [Supported Model Types](#supported-model-types). |
 | Streaming Text-to-Speech | ✅ **Supported** | [Streaming TTS](./docs/tts-streaming.md) | Incremental speech generation for low time-to-first-byte and playback while generating. |
@@ -205,6 +206,7 @@ APIs, batch vs online processing, and initialization are covered in [Speech Enha
 - [Known issues](./docs/KNOWN_ISSUES.md) – SDK-facing notes (e.g. Pocket TTS cloning / cross-platform behavior)
 - [Speech-to-Text (STT)](./docs/stt.md) – Offline transcription (file or samples)
 - [Streaming (Online) Speech-to-Text](./docs/stt-streaming.md) – Real-time recognition, partial results, endpoint detection
+- [Keyword Spotting (KWS)](./docs/kws.md) – On-device wake-word / keyword detection (`createKeywordSpotter`, `keywords.txt`)
 - [PCM Live Stream](./docs/pcm-live-stream.md) – Native microphone capture with resampling for live transcription (use with streaming STT)
 - [Text-to-Speech (TTS)](./docs/tts.md) – Offline and streaming generation
 - [TTS Alignment / Timestamps](./docs/tts-alignment.md) – `fast` and `accurate` modes, sentence/word/character granularity, alignment model download, `generateSpeechWithTimestamps()` and `generateSubtitlesFromAudio()`
